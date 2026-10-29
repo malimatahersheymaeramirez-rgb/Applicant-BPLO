@@ -20,7 +20,10 @@ class FeeTypeSeeder extends Seeder
         ];
 
         foreach ($types as $type) {
-            FeeType::create($type);
+            FeeType::updateOrCreate(
+                ['code' => $type['code']],
+                $type,
+            );
         }
     }
 }

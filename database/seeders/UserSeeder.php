@@ -12,49 +12,49 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@bansud.gov.ph',
-            'password' => 'Password123!',
-        ]);
-        $admin->role = User::ROLE_ADMIN;
-        $admin->is_active = true;
-        $admin->save();
+        $users = [
+            [
+                'email'    => 'admin@bansud.gov.ph',
+                'name'     => 'Admin User',
+                'password' => 'Password123!',
+                'role'     => User::ROLE_ADMIN,
+            ],
+            [
+                'email'    => 'bplo@bansud.gov.ph',
+                'name'     => 'BPLO Staff',
+                'password' => 'Password123!',
+                'role'     => User::ROLE_BPLO,
+            ],
+            [
+                'email'    => 'treasurer@bansud.gov.ph',
+                'name'     => 'Treasurer Staff',
+                'password' => 'Password123!',
+                'role'     => User::ROLE_TREASURER,
+            ],
+            [
+                'email'    => 'inspector@bansud.gov.ph',
+                'name'     => 'Inspector Staff',
+                'password' => 'Password123!',
+                'role'     => User::ROLE_INSPECTOR,
+            ],
+            [
+                'email'    => 'applicant@example.com',
+                'name'     => 'Sample Applicant',
+                'password' => 'Password123!',
+                'role'     => User::ROLE_APPLICANT,
+            ],
+        ];
 
-        $bplo = User::create([
-            'name' => 'BPLO Staff',
-            'email' => 'bplo@bansud.gov.ph',
-            'password' => 'Password123!',
-        ]);
-        $bplo->role = User::ROLE_BPLO;
-        $bplo->is_active = true;
-        $bplo->save();
-
-        $treasurer = User::create([
-            'name' => 'Treasurer Staff',
-            'email' => 'treasurer@bansud.gov.ph',
-            'password' => 'Password123!',
-        ]);
-        $treasurer->role = User::ROLE_TREASURER;
-        $treasurer->is_active = true;
-        $treasurer->save();
-
-        $inspector = User::create([
-            'name' => 'Inspector Staff',
-            'email' => 'inspector@bansud.gov.ph',
-            'password' => 'Password123!',
-        ]);
-        $inspector->role = User::ROLE_INSPECTOR;
-        $inspector->is_active = true;
-        $inspector->save();
-
-        $applicant = User::create([
-            'name' => 'Sample Applicant',
-            'email' => 'applicant@example.com',
-            'password' => 'Password123!',
-        ]);
-        $applicant->role = User::ROLE_APPLICANT;
-        $applicant->is_active = true;
-        $applicant->save();
+        foreach ($users as $data) {
+            User::updateOrCreate(
+                ['email' => $data['email']],
+                [
+                    'name'      => $data['name'],
+                    'password'  => bcrypt($data['password']),
+                    'role'      => $data['role'],
+                    'is_active' => true,
+                ],
+            );
+        }
     }
 }

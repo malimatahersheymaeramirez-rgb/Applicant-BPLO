@@ -21,7 +21,10 @@ class RequirementTypeSeeder extends Seeder
         ];
 
         foreach ($types as $type) {
-            RequirementType::create($type);
+            RequirementType::updateOrCreate(
+                ['code' => $type['code']],
+                $type,
+            );
         }
     }
 }

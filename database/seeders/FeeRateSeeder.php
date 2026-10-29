@@ -23,13 +23,15 @@ class FeeRateSeeder extends Seeder
         foreach ($rates as $code => $rate) {
             $feeType = FeeType::where('code', $code)->firstOrFail();
 
-            FeeRate::create([
-                'fee_type_id' => $feeType->id,
-                'label' => $rate['label'],
-                'amount' => $rate['amount'],
-                'calc_type' => 'fixed',
-                'is_active' => true,
-            ]);
+            FeeRate::updateOrCreate(
+                ['fee_type_id' => $feeType->id],
+                [
+                    'label'     => $rate['label'],
+                    'amount'    => $rate['amount'],
+                    'calc_type' => 'fixed',
+                    'is_active' => true,
+                ],
+            );
         }
     }
 }
